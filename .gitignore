@@ -8,6 +8,3 @@ DerivedData/
 
 # XcodeGen output (regenerate with: xcodegen generate)
 QuickNFO.xcodeproj
-
-# Old binary
-QuickNFO.qlgenerator.zip

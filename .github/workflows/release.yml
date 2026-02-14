@@ -1,0 +1,57 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Build
+        run: make build
+
+      - name: Package
+        run: make package
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Calculate SHA256
+        id: sha256
+        run: |
+          SHA=$(shasum -a 256 "build/QuickNFO-v${{ steps.version.outputs.version }}.zip" | awk '{print $1}')
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/QuickNFO-v${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
+          body: |
+            ## Installation
+
+            ### Homebrew
+            ```bash
+            brew tap vigo/quicknfo
+            brew install --cask quicknfo --no-quarantine
+            ```
+
+            ### Manual
+            1. Download `QuickNFO-v${{ steps.version.outputs.version }}.zip` below
+            2. Extract and move `QuickNFO.app` to `/Applications`
+            3. Run `xattr -cr /Applications/QuickNFO.app`
+            4. Launch QuickNFO.app once to register extensions
+
+            **SHA256:** `${{ steps.sha256.outputs.sha256 }}`
