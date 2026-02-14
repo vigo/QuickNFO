@@ -1,6 +1,13 @@
-build
+build/
+DerivedData/
 .DS_Store
 *.mode1v3
 *.pbxuser
-QuickNFO.xcodeproj/xcuserdata
-QuickNFO.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace
+
+# XcodeGen output (regenerate with: xcodegen generate)
+QuickNFO.xcodeproj
+
+# Old binary
+QuickNFO.qlgenerator.zip
