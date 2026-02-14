@@ -1,0 +1,69 @@
+name: QuickNFO
+options:
+  bundleIdPrefix: org.planbnet
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+
+targets:
+  QuickNFO:
+    type: application
+    platform: macOS
+    sources:
+      - QuickNFOApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.planbnet.quicknfo
+        INFOPLIST_FILE: QuickNFOApp/Info.plist
+        PRODUCT_NAME: QuickNFO
+        GENERATE_INFOPLIST_FILE: false
+        ENABLE_APP_SANDBOX: true
+        CODE_SIGN_ENTITLEMENTS: QuickNFOApp/QuickNFO.entitlements
+    dependencies:
+      - target: QuickNFOPreview
+      - target: QuickNFOThumbnail
+
+  QuickNFOPreview:
+    type: app-extension
+    platform: macOS
+    sources:
+      - PreviewExtension
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.planbnet.quicknfo.preview
+        INFOPLIST_FILE: PreviewExtension/Info.plist
+        PRODUCT_NAME: QuickNFOPreview
+        GENERATE_INFOPLIST_FILE: false
+        ENABLE_APP_SANDBOX: true
+        SKIP_INSTALL: true
+        CODE_SIGN_ENTITLEMENTS: PreviewExtension/QuickNFOPreview.entitlements
+    frameworks:
+      - sdk: QuickLookUI.framework
+        link: true
+
+  QuickNFOThumbnail:
+    type: app-extension
+    platform: macOS
+    sources:
+      - ThumbnailExtension
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.planbnet.quicknfo.thumbnail
+        INFOPLIST_FILE: ThumbnailExtension/Info.plist
+        PRODUCT_NAME: QuickNFOThumbnail
+        GENERATE_INFOPLIST_FILE: false
+        ENABLE_APP_SANDBOX: true
+        SKIP_INSTALL: true
+        CODE_SIGN_ENTITLEMENTS: ThumbnailExtension/QuickNFOThumbnail.entitlements
+    frameworks:
+      - sdk: QuickLookThumbnailing.framework
+        link: true
