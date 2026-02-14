@@ -48,7 +48,7 @@ jobs:
             ### Homebrew
             ```bash
             brew tap vigo/quicknfo
-            brew install --cask quicknfo --no-quarantine
+            brew install --cask vigo/quicknfo/quicknfo
             ```
 
             ### Manual
