@@ -27,7 +27,7 @@ Supports both **preview** (full content) and **thumbnail** generation.
 
 ```bash
 brew tap vigo/quicknfo
-brew install --cask quicknfo --no-quarantine
+brew install --cask vigo/quicknfo/quicknfo
 ```
 
 ### Manual Download
@@ -64,8 +64,7 @@ block the app on first launch. To resolve this:
 xattr -cr /Applications/QuickNFO.app
 ```
 
-If you install via Homebrew with `--no-quarantine`, this step is handled
-automatically.
+The Homebrew cask runs `xattr -cr` automatically after installation.
 
 ## Upgrading from Previous Versions
 
